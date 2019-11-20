@@ -81,7 +81,7 @@ public class QQService {
         if(qqPojo.getMessage()==null||!(qqPojo.getMessage().contains("/"))) return null;
         if(qqPojo.getMessage().startsWith("/players"))
         {
-            if(qqPojo.getMessage().equals("/players")) return new QQresponse(getServerPlayers(qqPojo.getMessage()
+            if(!qqPojo.getMessage().equals("/players")) return new QQresponse(getServerPlayers(qqPojo.getMessage()
                     .replace("/players ","")
                     .replace(" ","")));
             StringBuilder stringBuilder=new StringBuilder();
