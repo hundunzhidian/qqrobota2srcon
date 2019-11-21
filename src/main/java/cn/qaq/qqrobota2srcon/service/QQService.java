@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @program: QaQCloud
@@ -58,7 +59,7 @@ public class QQService {
             }
             stringBuilder.append("\n");
         }
-        stringBuilder.append("--------------------");
+        stringBuilder.append("--------------------\n");
         return stringBuilder.toString();
     }
     public String getServerInfo(String ip)
@@ -79,7 +80,7 @@ public class QQService {
     public QQresponse msgHandle(QQPojo qqPojo)throws Exception
     {
         qqPojo.setIsmanager(config.isAuth(String.valueOf(qqPojo.getSender().getUser_id())));
-        HashMap<String,GlobalConfig.server> servers=config.getServerMap();
+        LinkedHashMap<String,GlobalConfig.server> servers=config.getServerMap();
         //下面开始分析....
         if(qqPojo.getMessage()==null||!(qqPojo.getMessage().contains("/"))) return null;
         if(qqPojo.getMessage().startsWith("/players"))
@@ -88,7 +89,7 @@ public class QQService {
                     .replace("/players ","")
                     .replace(" ","")));
             StringBuilder stringBuilder=new StringBuilder();
-            for(HashMap.Entry<String,GlobalConfig.server> entry:servers.entrySet())
+            for(Map.Entry<String,GlobalConfig.server> entry:servers.entrySet())
             {//遍历服务器信息
                 stringBuilder.append(entry.getKey());
                 stringBuilder.append(" ");
@@ -100,7 +101,7 @@ public class QQService {
         {
             StringBuilder stringBuilder=new StringBuilder();
             stringBuilder.append("服务器列表：\n");
-            for(HashMap.Entry<String,GlobalConfig.server> entry:servers.entrySet())
+            for(Map.Entry<String,GlobalConfig.server> entry:servers.entrySet())
             {//遍历服务器信息
                 stringBuilder.append(entry.getKey());
                 stringBuilder.append("\n");
@@ -109,7 +110,7 @@ public class QQService {
         }else  if(qqPojo.getMessage().equals("/server"))
         {
             StringBuilder stringBuilder=new StringBuilder();
-            for(HashMap.Entry<String,GlobalConfig.server> entry:servers.entrySet())
+            for(Map.Entry<String,GlobalConfig.server> entry:servers.entrySet())
             {//遍历服务器信息
                 stringBuilder.append(entry.getKey());
                 stringBuilder.append(":\n");

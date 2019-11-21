@@ -8,10 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @program: qqrobota2srcon
@@ -23,7 +20,7 @@ import java.util.Map;
 @Slf4j
 public class GlobalConfig {
 
-    private HashMap<String,server> serverMap=new HashMap<String,server>();//
+    private LinkedHashMap<String,server> serverMap=new LinkedHashMap<String,server>();//
     @Value("#{'${config.server.qq}'.split(';')}")
     private List<String> manaQQs=new ArrayList<>();//这个是管理员qq号，为空则无需授权使用rcon命令
 
@@ -38,7 +35,7 @@ public class GlobalConfig {
     @Autowired
     private ConfigurableApplicationContext context;
 
-    public HashMap<String, server> getServerMap() {
+    public LinkedHashMap<String, server> getServerMap() {
         return serverMap;
     }
 
