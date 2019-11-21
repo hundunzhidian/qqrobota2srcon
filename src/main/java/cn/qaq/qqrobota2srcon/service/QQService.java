@@ -5,6 +5,7 @@ import cn.qaq.qqrobota2srcon.utils.QQPojo;
 import cn.qaq.qqrobota2srcon.utils.QQresponse;
 import cn.qaq.qqrobota2srcon.utils.TcpTools;
 import cn.qaq.qqrobota2srcon.utils.UdpServer;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +21,21 @@ import java.util.HashMap;
  * @create: 2019-09-03 10:17
  **/
 @Service
+@Slf4j
 public class QQService {
 
 
     @Autowired
     private GlobalConfig config;
     public String getServerPlayers(String ip) throws IOException {
-
+        log.debug(ip);
         JSONArray jsonArray=UdpServer.getPlayers(ip);
         StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder.append("当前玩家:");
+        stringBuilder.append(jsonArray.size());
+        stringBuilder.append("个\n");
         for(int i=0;i<jsonArray.size();i++)
         {
-            stringBuilder.append("当前玩家:");
-            stringBuilder.append(jsonArray.size());
-            stringBuilder.append("个\n");
             stringBuilder.append(jsonArray.getJSONObject(i).getString("name"));
             stringBuilder.append("     ");
             int time=jsonArray.getJSONObject(i).getInt("time");
