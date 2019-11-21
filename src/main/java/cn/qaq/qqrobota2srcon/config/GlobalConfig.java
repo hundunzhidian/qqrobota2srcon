@@ -81,6 +81,7 @@ public class GlobalConfig {
         try {
             for(Integer i=0;i<ips.size();i++)
             {
+                log.debug(names.get(ips.size()-i-1));
                 if(serverMap.containsKey(names.get(ips.size()-i-1))) throw new Exception("加载配置错误！不应存在相同的服务器名称");
                 serverMap.put(names.get(ips.size()-i-1),new server(ips.get(ips.size()-1-i),passwords.get(ips.size()-1-i)));
             }
