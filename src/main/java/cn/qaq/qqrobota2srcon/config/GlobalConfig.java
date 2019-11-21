@@ -84,7 +84,8 @@ public class GlobalConfig {
         try {
             for(Integer i=0;i<ips.size();i++)
             {
-                serverMap.put(names.get(i),new server(ips.get(i),passwords.get(i)));
+                if(serverMap.containsKey(names.get(ips.size()-i-1))) throw new Exception("加载配置错误！不应存在相同的服务器名称");
+                serverMap.put(names.get(ips.size()-i-1),new server(ips.get(ips.size()-1-i),passwords.get(ips.size()-1-i)));
             }
             log.info("配置加载成功....已注入"+serverMap.size()+"个服务器信息");
             log.info("服务器启动成功，等待酷Q消息......");

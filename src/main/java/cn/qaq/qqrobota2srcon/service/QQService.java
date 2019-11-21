@@ -58,6 +58,7 @@ public class QQService {
             }
             stringBuilder.append("\n");
         }
+        stringBuilder.append("--------------------");
         return stringBuilder.toString();
     }
     public String getServerInfo(String ip)
