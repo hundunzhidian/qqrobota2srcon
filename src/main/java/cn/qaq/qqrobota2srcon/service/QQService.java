@@ -127,7 +127,7 @@ public class QQService {
             {
                 if(servers.containsKey(qqPojo.getMessage().split(" ")[1]))
                 {
-                    return new QQresponse(getServerInfo(qqPojo.getMessage().split(" ")[1]));
+                    return new QQresponse(getServerInfo(servers.get(qqPojo.getMessage().split(" ")[1]).getIp()));
                 }
             }
             StringBuilder stringBuilder=new StringBuilder();
