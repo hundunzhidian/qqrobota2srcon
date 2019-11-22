@@ -65,6 +65,7 @@ public class QQService {
     }
     public String getServerInfo(String ip)
     {
+        log.debug(ip);
         JSONObject jsonObject1=UdpServer.getServers(ip);
         StringBuilder stringBuilder=new StringBuilder();
         stringBuilder.append("服务器名称: ");
