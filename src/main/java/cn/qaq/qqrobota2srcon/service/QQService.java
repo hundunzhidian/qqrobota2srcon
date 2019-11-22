@@ -1,5 +1,6 @@
 package cn.qaq.qqrobota2srcon.service;
 
+import ch.qos.logback.core.joran.conditional.ElseAction;
 import cn.qaq.qqrobota2srcon.config.GlobalConfig;
 import cn.qaq.qqrobota2srcon.utils.QQPojo;
 import cn.qaq.qqrobota2srcon.utils.QQresponse;
@@ -85,9 +86,20 @@ public class QQService {
         if(qqPojo.getMessage()==null||!(qqPojo.getMessage().contains("/"))) return null;
         if(qqPojo.getMessage().startsWith("/players"))
         {
-            if(!qqPojo.getMessage().equals("/players")) return new QQresponse(getServerPlayers(qqPojo.getMessage()
+            if(!qqPojo.getMessage().equals("/players"))
+            {
+                if(servers.containsKey(qqPojo.getMessage()
+                        .replace("/players ","")
+                        .replace(" ","")))
+                {
+                    return new QQresponse(getServerPlayers(servers.get(qqPojo.getMessage()
+                            .replace("/players ","")
+                            .replace(" ","")).getIp()));
+                }
+                    else return new QQresponse(getServerPlayers(qqPojo.getMessage()
                     .replace("/players ","")
                     .replace(" ","")));
+            }
             StringBuilder stringBuilder=new StringBuilder();
             for(Map.Entry<String,GlobalConfig.server> entry:servers.entrySet())
             {//遍历服务器信息
@@ -107,8 +119,17 @@ public class QQService {
                 stringBuilder.append("\n");
             }
             return  new QQresponse(stringBuilder.toString());
-        }else  if(qqPojo.getMessage().equals("/server"))
+        }else  if(qqPojo.getMessage().startsWith("/server"))
         {
+            if(!qqPojo.getMessage().equals("/server")&&servers.containsKey(qqPojo.getMessage()
+                    .replace("/server ","")
+                    .replace(" ","")))
+            {
+                //根据服务器名称访问服务器信息
+                new QQresponse(getServerInfo(servers.get(qqPojo.getMessage()
+                        .replace("/connect ","")
+                        .replace(" ","")).getIp()));
+            }
             StringBuilder stringBuilder=new StringBuilder();
             for(Map.Entry<String,GlobalConfig.server> entry:servers.entrySet())
             {//遍历服务器信息
