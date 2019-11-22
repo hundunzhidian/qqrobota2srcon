@@ -123,15 +123,12 @@ public class QQService {
         }else  if(qqPojo.getMessage().startsWith("/server"))
         {
             log.debug(qqPojo.getMessage());
-            if((!qqPojo.getMessage().equals("/server")))
+            if(!qqPojo.getMessage().equals("/server"))
             {
-                //根据服务器名称访问服务器信息
-                if(servers.containsKey(qqPojo.getMessage()
-                        .replace("/server ","")
-                        .replace(" ","")))
-                    new QQresponse(getServerInfo(servers.get(qqPojo.getMessage()
-                        .replace("/server ","")
-                        .replace(" ","")).getIp()));
+                if(servers.containsKey(qqPojo.getMessage().split(" ")[1]))
+                {
+                    return new QQresponse(getServerInfo(qqPojo.getMessage().split(" ")[1]));
+                }
             }
             StringBuilder stringBuilder=new StringBuilder();
             for(Map.Entry<String,GlobalConfig.server> entry:servers.entrySet())
