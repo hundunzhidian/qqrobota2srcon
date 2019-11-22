@@ -37,7 +37,7 @@ config.server.password=aaa;bbb
 ```shell
 config.server.name=server1;server2
 ```
-####管理员qq密码,数字,以;隔开，执行rcon命令时需要校验
+####管理员qq号,数字,以;隔开，执行rcon命令时需要校验
 ```shell
 config.server.qq=123123
 ```
