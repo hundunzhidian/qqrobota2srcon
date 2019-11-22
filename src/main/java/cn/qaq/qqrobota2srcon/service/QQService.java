@@ -123,12 +123,13 @@ public class QQService {
         }else  if(qqPojo.getMessage().startsWith("/server"))
         {
             log.debug(qqPojo.getMessage());
-            if((!qqPojo.getMessage().equals("/server"))&&servers.containsKey(qqPojo.getMessage()
-                    .replace("/server ","")
-                    .replace(" ","")))
+            if((!qqPojo.getMessage().equals("/server")))
             {
                 //根据服务器名称访问服务器信息
-                new QQresponse(getServerInfo(servers.get(qqPojo.getMessage()
+                if(servers.containsKey(qqPojo.getMessage()
+                        .replace("/server ","")
+                        .replace(" ","")))
+                    new QQresponse(getServerInfo(servers.get(qqPojo.getMessage()
                         .replace("/server ","")
                         .replace(" ","")).getIp()));
             }
