@@ -14,7 +14,7 @@
 "post_url": "http://127.0.0.1:9090"
 ```
 **注意酷Qhttp的配置方式为ini或者json方式，配置post_url项即可**
-- 项目基于JDK1.8,请下载JDK1.8及以上版本运行，运行命令:
+- 项目基于JDK1.8,请下载JDK1.8及以上版本运行，运行命令,以下的qqrobota2srcon-0.0.1-SNAPSHOT.jar均为打包后的jar名称，可能有所不同，但文件一定要是jar格式:
 ```shell
 java -jar qqrobota2srcon-0.0.1-SNAPSHOT.jar --server.port=9090
 ```
