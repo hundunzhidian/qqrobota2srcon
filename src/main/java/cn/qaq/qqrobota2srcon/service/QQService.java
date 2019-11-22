@@ -122,7 +122,8 @@ public class QQService {
             return  new QQresponse(stringBuilder.toString());
         }else  if(qqPojo.getMessage().startsWith("/server"))
         {
-            if(!qqPojo.getMessage().equals("/server")&&servers.containsKey(qqPojo.getMessage()
+            log.debug(qqPojo.getMessage());
+            if((!qqPojo.getMessage().equals("/server"))&&servers.containsKey(qqPojo.getMessage()
                     .replace("/server ","")
                     .replace(" ","")))
             {
