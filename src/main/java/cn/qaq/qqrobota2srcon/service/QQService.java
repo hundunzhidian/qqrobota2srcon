@@ -127,7 +127,7 @@ public class QQService {
             {
                 //根据服务器名称访问服务器信息
                 new QQresponse(getServerInfo(servers.get(qqPojo.getMessage()
-                        .replace("/connect ","")
+                        .replace("/server ","")
                         .replace(" ","")).getIp()));
             }
             StringBuilder stringBuilder=new StringBuilder();
