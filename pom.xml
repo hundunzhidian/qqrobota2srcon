@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>cn.qaq</groupId>
 	<artifactId>qqrobota2srcon</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1_Release</version>
 	<name>QQrobotA2sRcon</name>
 	<description>a2s、rcon APi For QQ robot(Ku Q)</description>
 
