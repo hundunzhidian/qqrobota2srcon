@@ -41,6 +41,14 @@ config.server.name=server1;server2
 ```shell
 config.server.qq=123123
 ```
+####是否开启qq群白名单,false为不开启白名单，true为开启
+```shell
+config.server.groupflag=false
+```
+####qq群白名单，其他群都不会进行响应，以;隔开
+```shell
+config.server.group=
+```
 **注意：配置为范例，请结合实际情况更改**
 
 ## 使用命令

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -29,38 +30,46 @@ public class QQService {
 
     @Autowired
     private GlobalConfig config;
-    public String getServerPlayers(String ip) throws IOException {
+    public String getServerPlayers(String ip) {
         log.debug(ip);
-        JSONArray jsonArray=UdpServer.getPlayers(ip);
         StringBuilder stringBuilder=new StringBuilder();
-        stringBuilder.append("当前玩家:");
-        stringBuilder.append(jsonArray.size());
-        stringBuilder.append("个\n");
-        for(int i=0;i<jsonArray.size();i++)
-        {
-            stringBuilder.append(jsonArray.getJSONObject(i).getString("name"));
-            stringBuilder.append("     ");
-            int time=jsonArray.getJSONObject(i).getInt("time");
-            if(time>3600)
+        try {
+            JSONArray jsonArray=UdpServer.getPlayers(ip);
+            stringBuilder.append("当前玩家:");
+            stringBuilder.append(jsonArray.size());
+            stringBuilder.append("个\n");
+            for(int i=0;i<jsonArray.size();i++)
             {
-                stringBuilder.append(time/3600);
-                stringBuilder.append("h");
-                stringBuilder.append(time/60%60);
-                stringBuilder.append("m");
-                stringBuilder.append(time%60);
-                stringBuilder.append("s");
-            }else if(time>60){
-                stringBuilder.append(time/60);
-                stringBuilder.append("m");
-                stringBuilder.append(time%60);
-                stringBuilder.append("s");
-            }else {
-                stringBuilder.append(time);
-                stringBuilder.append("s");
+                stringBuilder.append(jsonArray.getJSONObject(i).getString("name"));
+                stringBuilder.append("     ");
+                int time=jsonArray.getJSONObject(i).getInt("time");
+                if(time>3600)
+                {
+                    stringBuilder.append(time/3600);
+                    stringBuilder.append("h");
+                    stringBuilder.append(time/60%60);
+                    stringBuilder.append("m");
+                    stringBuilder.append(time%60);
+                    stringBuilder.append("s");
+                }else if(time>60){
+                    stringBuilder.append(time/60);
+                    stringBuilder.append("m");
+                    stringBuilder.append(time%60);
+                    stringBuilder.append("s");
+                }else {
+                    stringBuilder.append(time);
+                    stringBuilder.append("s");
+                }
+                stringBuilder.append("\n");
             }
-            stringBuilder.append("\n");
+            stringBuilder.append("--------------------\n");
+
         }
-        stringBuilder.append("--------------------\n");
+        catch (IOException e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            stringBuilder.append("【访问异常】");
+        }
         return stringBuilder.toString();
     }
     public String getServerInfo(String ip)
@@ -81,6 +90,7 @@ public class QQService {
     }
     public QQresponse msgHandle(QQPojo qqPojo)throws Exception
     {
+        if(!config.isQQenable(qqPojo)) return null;
         qqPojo.setIsmanager(config.isAuth(String.valueOf(qqPojo.getSender().getUser_id())));
         LinkedHashMap<String,GlobalConfig.server> servers=config.getServerMap();
         //下面开始分析....

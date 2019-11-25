@@ -1,5 +1,6 @@
 package cn.qaq.qqrobota2srcon.config;
 
+import cn.qaq.qqrobota2srcon.utils.QQPojo;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,10 @@ public class GlobalConfig {
     private List<String> passwords;
     @Value("#{'${config.server.name}'.split(';')}")
     private List<String> names;
-
+    @Value("#{'${config.server.group}'.split(';')}")
+    private List<String> qqGroup;
+    @Value("${config.server.groupflag}")
+    private boolean groupFlag; //默认false
     @Autowired
     private ConfigurableApplicationContext context;
 
@@ -39,6 +43,14 @@ public class GlobalConfig {
         return serverMap;
     }
 
+    //true则响应，false则不响应
+    public boolean isQQenable(QQPojo qqPojo)
+    {
+        if(qqPojo.getGroup_id()==null) return true;
+        if(!groupFlag||qqGroup==null||qqGroup.size()==0) return true;
+        if(qqGroup.contains(qqPojo.getGroup_id())) return true;
+        return false;
+    }
     public class server
     {
         private String ip;
