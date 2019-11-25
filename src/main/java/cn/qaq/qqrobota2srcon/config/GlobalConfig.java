@@ -98,6 +98,7 @@ public class GlobalConfig {
                 serverMap.put(names.get(i),new server(ips.get(i),passwords.get(i)));
             }
             log.info("配置加载成功....已注入"+serverMap.size()+"个服务器信息");
+            if(groupFlag) log.info("QQ群白名单已开启");
             log.info("服务器启动成功，等待酷Q消息......");
         } catch (Exception e) {
             // TODO: handle exception
