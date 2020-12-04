@@ -1,3 +1,4 @@
+# 由于酷Q机器人已经关闭，该jar包仍然支持cqhttp插件，现在已发布融合了[机器人内核版](https://github.com/hundunzhidian/valvemiraibot)的协议包
 # 酷Q机器人http查询接口
 
 通过酷Q的http插件查询求生之路2、csgo等valve起源引擎服务器、以及使用rcon命令操作服务器
