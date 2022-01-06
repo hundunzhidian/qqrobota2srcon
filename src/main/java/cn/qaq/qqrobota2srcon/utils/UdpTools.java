@@ -70,7 +70,7 @@ public class UdpTools {
             return "";
         }
     }
-    public static final float getFloat(byte[] b) {
+    public static final Float getFloat(byte[] b) {
         int accum = 0;
         accum = accum|(b[0] & 0xff) << 0;
         accum = accum|(b[1] & 0xff) << 8;
@@ -91,6 +91,13 @@ public class UdpTools {
             }
         }
         return tmpBytes;
+    }
+    public static final void arraycopy(byte[] src,int srcPos,byte[] dest,int destPos,int length)
+    {
+        for(int i=0;i<length;i++)
+        {
+            dest[destPos+i]=src[srcPos+i];
+        }
     }
     public static  final String intToByteString(int src)
     {

@@ -3,6 +3,12 @@
 
 通过酷Q的http插件查询求生之路2、csgo等valve起源引擎服务器、以及使用rcon命令操作服务器
 
+## 2022-1-6 升级
+- 升级spring框架到5.x
+- 升级log4j框架到2.17.1,用于修复Log4j日志框架漏洞
+- 移除过于老旧的JSON库,使用JACKSON,提高一丢丢性能
+- 添加对A2s挑战协议支持
+
 ## 项目简介
 - 基于Spring boot创建，从[RconA2sAPi](https://github.com/hundunzhidian/RconA2sAPi/)项目扩展而来
 - 可以通过qq通信查询服务器、rcon命令操作服务器

@@ -6,15 +6,16 @@ import cn.qaq.qqrobota2srcon.utils.QQPojo;
 import cn.qaq.qqrobota2srcon.utils.QQresponse;
 import cn.qaq.qqrobota2srcon.utils.TcpTools;
 import cn.qaq.qqrobota2srcon.utils.UdpServer;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,19 +31,23 @@ public class QQService {
 
     @Autowired
     private GlobalConfig config;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
     public String getServerPlayers(String ip) {
         log.debug(ip);
         StringBuilder stringBuilder=new StringBuilder();
         try {
-            JSONArray jsonArray=UdpServer.getPlayers(ip);
+            List<HashMap<String,Object>> jsonArray= UdpServer.getPlayers(ip);
             stringBuilder.append("当前玩家:");
             stringBuilder.append(jsonArray.size());
             stringBuilder.append("个\n");
             for(int i=0;i<jsonArray.size();i++)
             {
-                stringBuilder.append(jsonArray.getJSONObject(i).getString("name"));
+                stringBuilder.append(jsonArray.get(i).get("name"));
                 stringBuilder.append("     ");
-                int time=jsonArray.getJSONObject(i).getInt("time");
+                Long time=Double.valueOf(String.valueOf(jsonArray.get(i).get("time"))).longValue();
                 if(time>3600)
                 {
                     stringBuilder.append(time/3600);
@@ -75,16 +80,16 @@ public class QQService {
     public String getServerInfo(String ip)
     {
         log.debug(ip);
-        JSONObject jsonObject1=UdpServer.getServers(ip);
+        HashMap<String,Object> jsonObject1=UdpServer.getServers(ip);
         StringBuilder stringBuilder=new StringBuilder();
         stringBuilder.append("服务器名称: ");
-        stringBuilder.append(jsonObject1.getString("name"));
+        stringBuilder.append(jsonObject1.get("name"));
         stringBuilder.append("\n当前地图: ");
-        stringBuilder.append(jsonObject1.getString("map"));
+        stringBuilder.append(jsonObject1.get("map"));
         stringBuilder.append("\n当前人数/Max: ");
-        stringBuilder.append(jsonObject1.getString("players"));
+        stringBuilder.append(jsonObject1.get("players"));
         stringBuilder.append("\n延迟：");
-        stringBuilder.append(jsonObject1.getString("time"));
+        stringBuilder.append(jsonObject1.get("time"));
         stringBuilder.append("\n");
         return stringBuilder.toString();
     }
