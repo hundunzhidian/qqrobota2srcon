@@ -3,6 +3,8 @@ package cn.qaq.qqrobota2srcon.controller;
 import cn.qaq.qqrobota2srcon.service.QQService;
 import cn.qaq.qqrobota2srcon.utils.QQPojo;
 import cn.qaq.qqrobota2srcon.utils.QQresponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,19 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
  * @author: QAQ
  * @create: 2019-09-03 10:15
  **/
-
+@Slf4j
 @RestController
 @RequestMapping("/")
 public class QQController {
 
     @Autowired
     private QQService service;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @PostMapping("/")
     public QQresponse msgHandle(@RequestBody QQPojo qqPojo)
     {
         try {
-            //log.debug("JSON:"+ JSONObject.fromObject(qqPojo).toString());
             return service.msgHandle(qqPojo);
         } catch (Exception e) {
             // TODO: handle exception

@@ -96,6 +96,9 @@ public class QQService {
     public QQresponse msgHandle(QQPojo qqPojo)throws Exception
     {
         if(!config.isQQenable(qqPojo)) return null;
+        if(qqPojo.getSender()==null)return null;
+        if(!qqPojo.getPost_type().equals("message"))return null;
+        log.debug("收到数据:"+ objectMapper.writeValueAsString(qqPojo));
         qqPojo.setIsmanager(config.isAuth(String.valueOf(qqPojo.getSender().getUser_id())));
         LinkedHashMap<String,GlobalConfig.server> servers=config.getServerMap();
         //下面开始分析....
