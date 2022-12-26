@@ -111,7 +111,7 @@ public class UdpServer {
                     break;
                 }*/
             }
-            src.put("players", resBytes[j+3]+"/"+resBytes[j+4]);
+            src.put("players",(resBytes[j+3]&0xff)+"/"+(resBytes[j+4]&0xff));
         if(resBytes[j+8]==(byte) 0x01)  src.put("visibility","private");
     }
     /**
@@ -171,7 +171,7 @@ public class UdpServer {
                     break;
                 }*/
         }
-        src.put("players", resBytes[j+1]+"/"+resBytes[j+2]);
+        src.put("players", (resBytes[j+1]&0xff)+"/"+(resBytes[j+2]&0xff));
         if(resBytes[j+6]==(byte) 0x01)  src.put("visibility","private");
     }
     /**

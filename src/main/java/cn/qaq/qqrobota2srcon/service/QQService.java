@@ -77,6 +77,7 @@ public class QQService {
         }
         return stringBuilder.toString();
     }
+    //变更为玩家+人数
     public String getServerInfo(String ip)
     {
         log.debug(ip);
@@ -91,6 +92,7 @@ public class QQService {
         stringBuilder.append("\n延迟：");
         stringBuilder.append(jsonObject1.get("time"));
         stringBuilder.append("\n");
+        stringBuilder.append(getServerPlayers(ip));
         return stringBuilder.toString();
     }
     public QQresponse msgHandle(QQPojo qqPojo)throws Exception
@@ -103,20 +105,20 @@ public class QQService {
         LinkedHashMap<String,GlobalConfig.server> servers=config.getServerMap();
         //下面开始分析....
         if(qqPojo.getMessage()==null||!(qqPojo.getMessage().contains("/"))) return null;
-        if(qqPojo.getMessage().startsWith("/players"))
+        if(qqPojo.getMessage().startsWith("/人数"))
         {
-            if(!qqPojo.getMessage().equals("/players"))
+            if(!qqPojo.getMessage().equals("/人数"))
             {
                 if(servers.containsKey(qqPojo.getMessage()
-                        .replace("/players ","")
+                        .replace("/人数 ","")
                         .replace(" ","")))
                 {
                     return new QQresponse(getServerPlayers(servers.get(qqPojo.getMessage()
-                            .replace("/players ","")
+                            .replace("/人数 ","")
                             .replace(" ","")).getIp()));
                 }
                     else return new QQresponse(getServerPlayers(qqPojo.getMessage()
-                    .replace("/players ","")
+                    .replace("/人数 ","")
                     .replace(" ","")));
             }
             StringBuilder stringBuilder=new StringBuilder();
@@ -128,7 +130,7 @@ public class QQService {
             }
             return  new QQresponse(stringBuilder.toString());
 
-        }else if (qqPojo.getMessage().equals("/list"))
+        }else if (qqPojo.getMessage().equals("/列表"))
         {
             StringBuilder stringBuilder=new StringBuilder();
             stringBuilder.append("服务器列表：\n");
@@ -138,10 +140,10 @@ public class QQService {
                 stringBuilder.append("\n");
             }
             return  new QQresponse(stringBuilder.toString());
-        }else  if(qqPojo.getMessage().startsWith("/server"))
+        }else  if(qqPojo.getMessage().startsWith("/群服"))
         {
             log.debug(qqPojo.getMessage());
-            if(!qqPojo.getMessage().equals("/server"))
+            if(!qqPojo.getMessage().equals("/群服"))
             {
                 if(servers.containsKey(qqPojo.getMessage().split(" ")[1]))
                 {
@@ -157,10 +159,10 @@ public class QQService {
             }
             return  new QQresponse(stringBuilder.toString());
         }
-        else if(qqPojo.getMessage().startsWith("/connect "))
+        else if(qqPojo.getMessage().startsWith("/查询 "))
         {
             return new QQresponse(getServerInfo(qqPojo.getMessage()
-                    .replace("/connect ","")
+                    .replace("/查询 ","")
                     .replace(" ","")));
         }else if(qqPojo.isIsmanager()&&qqPojo.getMessage().startsWith("/exec ")){
             String name=qqPojo.getMessage().split(" ")[1];
